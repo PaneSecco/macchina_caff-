@@ -149,29 +149,16 @@ namespace macchina_caffè
         public int calcolo_massimo_normali()
         {
             int i = SerbatoioAcqua;
-            int volte1 = 0;
-            int volte2 = 0;
+            int r = SerbatoioCaffe;
+            int volte = 0;
 
-            for(int j = 0; i >= 60; j ++)
+            for(int j = 0; i >= 60 && r >= 7; j ++)
             {
                 i -= 60;
-                volte1 = j;
+                r -= 7;
+                volte++;
             }
-
-            for (int j = 0; i >= 7; j++)
-            {
-                i -= 7;
-                volte2 = j;
-            }
-
-            if (volte1 < volte2)
-            {
-                return volte1;
-            }
-            else
-            {
-                return volte2;
-            }
+            return volte;
         }
 
         public Macchinetta confronto(Macchinetta a, Macchinetta b)
@@ -192,5 +179,10 @@ namespace macchina_caffè
                 }
             }
         }
+
+        //mettere secondo costruttore ecc
+        //controllare se mettere i this 
+        //gestire le eccezzioni
+        //fare il main
     }
 }
