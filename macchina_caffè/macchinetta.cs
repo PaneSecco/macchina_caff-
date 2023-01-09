@@ -1,0 +1,196 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace macchina_caffè
+{
+    internal class Macchinetta
+    {
+        //numero di serie
+        private string numero;
+        //serbatoio dell'acqua in ml
+        private int serbatoio_acqua;
+        //serbatio del caffè in g
+        private int serbatoio_caffe;
+        //contatore dei caffè erogati
+        private int erogati;
+        //limite massimo serbatoio acqua in ml
+        private int limite_acqua;
+        //limite massimo serbatoio caffè in g
+        private int limite_caffe;
+
+        public Macchinetta()
+        {
+            var chars = "abcdefghijklmnopqrstuvwxyz";
+            var chars2 = "01234567989";
+            var stringChars = new char[7];
+            var random = new Random();
+
+            for (int i = 0; i < 3; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                stringChars[i] = chars2[random.Next(chars.Length)];
+            }
+
+            var finalString = new String(stringChars);
+
+            Numero = finalString;
+            SerbatoioAcqua = 0;
+            SerbatoioCaffe = 0;
+            this.erogati = 0;
+            Limite_acqua = 2000;
+            Limite_caffe = 500;
+        }
+
+        public string Numero
+        {
+            get { return numero; }
+
+            set { numero = value;}
+        }
+
+        public int SerbatoioAcqua
+        {
+            get { return serbatoio_acqua; }
+
+            set { serbatoio_acqua = limite_acqua; }
+        }
+
+        public int SerbatoioCaffe
+        {
+            get { return serbatoio_caffe; }
+
+            set { serbatoio_caffe = limite_caffe; }
+        }
+
+        public int Erogati
+        {
+            get { return erogati; }
+
+            set { erogati+=value; }
+        }
+
+        public int Limite_acqua
+        {
+            get { return limite_acqua; }
+            set { limite_acqua = value; }
+        }
+
+        public int Limite_caffe
+        {
+            get { return limite_caffe; }
+            set { limite_caffe = value; }
+        }
+
+        public int stato_acqua()
+        {
+            return SerbatoioAcqua;
+        }
+
+        public int stato_caffe()
+        {
+            return SerbatoioCaffe;
+        }
+
+        public void erogazione_normale()
+        {
+            Random random = new Random();
+            int acqua = random.Next(50, 60);
+            int caffe = random.Next(5, 7);
+
+            if (SerbatoioAcqua >= acqua && SerbatoioCaffe >= caffe)
+            {
+                SerbatoioAcqua -= acqua;
+                SerbatoioCaffe -= caffe;
+            }
+            else
+            {
+                throw new Exception("I materiali nei serbatoi non sono sufficienti, si prega di riempirli");
+            }
+
+            Erogati=1;
+        }
+
+        public void erogazione_lungo()
+        {
+            Random random = new Random();
+            int acqua = random.Next(15, 20);
+            int caffe = random.Next(3, 5);
+
+            if (SerbatoioAcqua >= acqua && SerbatoioCaffe >= caffe)
+            {
+                SerbatoioAcqua -= acqua;
+                SerbatoioCaffe -= caffe;
+            }
+            else
+            {
+                throw new Exception("I materiali nei serbatoi non sono sufficienti, si prega di riempirli");
+            }
+
+            Erogati = 1;
+        }
+
+        public void ricarica_acqua()
+        {
+            SerbatoioAcqua = limite_acqua;
+        }
+
+        public void ricarica_caffe()
+        {
+            SerbatoioCaffe = limite_caffe;
+        }
+
+        public int calcolo_massimo_normali()
+        {
+            int i = SerbatoioAcqua;
+            int volte1 = 0;
+            int volte2 = 0;
+
+            for(int j = 0; i >= 60; j ++)
+            {
+                i -= 60;
+                volte1 = j;
+            }
+
+            for (int j = 0; i >= 7; j++)
+            {
+                i -= 7;
+                volte2 = j;
+            }
+
+            if (volte1 < volte2)
+            {
+                return volte1;
+            }
+            else
+            {
+                return volte2;
+            }
+        }
+
+        public Macchinetta confronto(Macchinetta a, Macchinetta b)
+        {
+            if (a == null || b == null)
+            {
+                throw new Exception("uno degli oggetti ricevuti è vuoto");
+            }
+            else
+            {
+                if (a.Erogati > b.Erogati)
+                {
+                    return a;
+                }
+                else
+                {
+                    return b;
+                }
+            }
+        }
+    }
+}
