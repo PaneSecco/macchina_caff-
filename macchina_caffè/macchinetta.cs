@@ -21,7 +21,7 @@ namespace macchina_caffè
         //limite massimo serbatoio caffè in g
         private int limite_caffe;
 
-        public Macchinetta()
+        public Macchinetta(int maxa, int maxc)
         {
             var chars = "abcdefghijklmnopqrstuvwxyz";
             var chars2 = "01234567989";
@@ -41,11 +41,16 @@ namespace macchina_caffè
             var finalString = new String(stringChars);
 
             Numero = finalString;
+            Limite_acqua = maxa;
+            Limite_caffe = maxc;
             SerbatoioAcqua = 0;
             SerbatoioCaffe = 0;
             this.erogati = 0;
-            Limite_acqua = 2000;
-            Limite_caffe = 500;
+        }
+
+        public Macchinetta()
+        {
+
         }
 
         public string Numero
@@ -79,13 +84,33 @@ namespace macchina_caffè
         public int Limite_acqua
         {
             get { return limite_acqua; }
-            set { limite_acqua = value; }
+            set 
+            { 
+                if (value <= 0)
+                {
+                    throw new ArgumentException("il valore inserito deve essere maggiore di 0");
+                }
+                else
+                {
+                    limite_acqua = value;
+                } 
+            }
         }
 
         public int Limite_caffe
         {
             get { return limite_caffe; }
-            set { limite_caffe = value; }
+            set 
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentException("il valore inserito deve essere maggiore di 0");
+                }
+                else
+                {
+                    limite_caffe = value;
+                }
+            }
         }
 
         public int stato_acqua()
@@ -180,9 +205,21 @@ namespace macchina_caffè
             }
         }
 
+        //metodi di base
+
+        public bool Equals(Macchinetta a2)
+        {
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("Macchinetta ({0}, {1})", numero, serbatoio_acqua, serbatoio_caffe, Erogati, limite_acqua, limite_caffe);
+        }
+
         //mettere secondo costruttore ecc
         //controllare se mettere i this 
-        //gestire le eccezzioni
+        //gestire le eccezioni
         //fare il main
     }
 }
