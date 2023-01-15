@@ -9,7 +9,7 @@ namespace macchina_caffè
     internal class Macchinetta
     {
         //numero di serie
-        private string numero;
+        private static string numero;
         //serbatoio dell'acqua in ml
         private int serbatoio_acqua;
         //serbatio del caffè in g
@@ -25,7 +25,8 @@ namespace macchina_caffè
         {
             var chars = "abcdefghijklmnopqrstuvwxyz";
             var chars2 = "01234567989";
-            var stringChars = new char[7];
+            var stringChars = new char[3];
+            var stringChars2 = new char[4];
             var random = new Random();
 
             for (int i = 0; i < 3; i++)
@@ -35,12 +36,15 @@ namespace macchina_caffè
 
             for (int i = 0; i < 4; i++)
             {
-                stringChars[i] = chars2[random.Next(chars.Length)];
+                stringChars2[i] = chars2[random.Next(chars2.Length)];
             }
 
             var finalString = new String(stringChars);
+            var finalString2 = new String(stringChars2);
 
-            Numero = finalString;
+            var final = finalString + finalString2;
+
+            Numero = final;
             Limite_acqua = maxa;
             Limite_caffe = maxc;
             SerbatoioAcqua = 0;
@@ -57,21 +61,21 @@ namespace macchina_caffè
         {
             get { return numero; }
 
-            set { numero = value;}
+            private set { numero = value;}
         }
 
         public int SerbatoioAcqua
         {
             get { return serbatoio_acqua; }
 
-            set { serbatoio_acqua = limite_acqua; }
+            private set { serbatoio_acqua = value; }
         }
 
         public int SerbatoioCaffe
         {
             get { return serbatoio_caffe; }
 
-            set { serbatoio_caffe = limite_caffe; }
+            private set { serbatoio_caffe = value; }
         }
 
         public int Erogati
@@ -84,7 +88,7 @@ namespace macchina_caffè
         public int Limite_acqua
         {
             get { return limite_acqua; }
-            set 
+            private set 
             { 
                 if (value <= 0)
                 {
@@ -100,7 +104,7 @@ namespace macchina_caffè
         public int Limite_caffe
         {
             get { return limite_caffe; }
-            set 
+            private set 
             {
                 if (value <= 0)
                 {
@@ -113,21 +117,21 @@ namespace macchina_caffè
             }
         }
 
-        public int stato_acqua()
+        public int Stato_acqua()
         {
             return SerbatoioAcqua;
         }
 
-        public int stato_caffe()
+        public int Stato_caffe()
         {
             return SerbatoioCaffe;
         }
 
-        public void erogazione_normale()
+        public void Erogazione_normale()
         {
             Random random = new Random();
-            int acqua = random.Next(50, 60);
-            int caffe = random.Next(5, 7);
+            int acqua = random.Next(50, 61);
+            int caffe = random.Next(5, 8);
 
             if (SerbatoioAcqua >= acqua && SerbatoioCaffe >= caffe)
             {
@@ -142,11 +146,11 @@ namespace macchina_caffè
             Erogati=1;
         }
 
-        public void erogazione_lungo()
+        public void Erogazione_lungo()
         {
             Random random = new Random();
-            int acqua = random.Next(15, 20);
-            int caffe = random.Next(3, 5);
+            int acqua = random.Next(15, 21);
+            int caffe = random.Next(3, 6);
 
             if (SerbatoioAcqua >= acqua && SerbatoioCaffe >= caffe)
             {
@@ -161,17 +165,17 @@ namespace macchina_caffè
             Erogati = 1;
         }
 
-        public void ricarica_acqua()
+        public void Ricarica_acqua()
         {
             SerbatoioAcqua = limite_acqua;
         }
 
-        public void ricarica_caffe()
+        public void Ricarica_caffe()
         {
             SerbatoioCaffe = limite_caffe;
         }
 
-        public int calcolo_massimo_normali()
+        public int Calcolo_massimo_normali()
         {
             int i = SerbatoioAcqua;
             int r = SerbatoioCaffe;
@@ -186,7 +190,7 @@ namespace macchina_caffè
             return volte;
         }
 
-        public Macchinetta confronto(Macchinetta a, Macchinetta b)
+        public Macchinetta Confronto(Macchinetta a, Macchinetta b)
         {
             if (a == null || b == null)
             {
@@ -207,9 +211,16 @@ namespace macchina_caffè
 
         //metodi di base
 
-        public bool Equals(Macchinetta a2)
+        public bool Equals(Macchinetta a1, Macchinetta a2)
         {
-            return true;
+            if(a1 == a2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public override string ToString()
@@ -217,9 +228,23 @@ namespace macchina_caffè
             return String.Format("Macchinetta ({0}, {1})", numero, serbatoio_acqua, serbatoio_caffe, Erogati, limite_acqua, limite_caffe);
         }
 
-        //mettere secondo costruttore ecc
-        //controllare se mettere i this 
-        //gestire le eccezioni
-        //fare il main
+        public Macchinetta Clone(Macchinetta a)
+        {
+            Macchinetta b = new Macchinetta();
+            if (a == null)
+            {
+                throw new Exception("              ");
+            }
+            else
+            {
+                b.Numero = Numero;
+                b.SerbatoioAcqua = SerbatoioAcqua;
+                b.SerbatoioCaffe = SerbatoioCaffe;
+                b.Erogati = Erogati;
+                b.Limite_acqua = Limite_acqua;
+                b.Limite_caffe = Limite_caffe;
+            }
+            return b;
+        }
     }
 }
