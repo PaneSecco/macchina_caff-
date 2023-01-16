@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace macchina_caffè
 {
-    internal class Macchinetta
+    public class Macchinetta
     {
         //numero di serie
         private static string numero;
@@ -216,39 +216,29 @@ namespace macchina_caffè
 
         //metodi di base
 
-        public bool Equals(Macchinetta a1, Macchinetta a2)
+        public bool Equals(Macchinetta p)
         {
-            if(a1 == a2)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (p == null) return false;
+
+            if (this == p) return true;
+
+            return (this.Numero == p.Numero);
         }
 
         public override string ToString()
         {
-            return String.Format("Macchinetta ({0}, {1})", numero, serbatoio_acqua, serbatoio_caffe, Erogati, limite_acqua, limite_caffe);
+            return String.Format("Macchinetta", numero, serbatoio_acqua, serbatoio_caffe, Erogati, limite_acqua, limite_caffe);
         }
 
-        public Macchinetta Clone(Macchinetta a)
+        public Macchinetta Clone()
         {
             Macchinetta b = new Macchinetta();
-            if (a == null)
-            {
-                throw new Exception("              ");
-            }
-            else
-            {
-                b.Numero = Numero;
-                b.SerbatoioAcqua = SerbatoioAcqua;
-                b.SerbatoioCaffe = SerbatoioCaffe;
-                b.Erogati = Erogati;
-                b.Limite_acqua = Limite_acqua;
-                b.Limite_caffe = Limite_caffe;
-            }
+            this.Numero = Numero;
+            this.SerbatoioAcqua = SerbatoioAcqua;
+            this.SerbatoioCaffe = SerbatoioCaffe;
+            this.Erogati = Erogati;
+            this.Limite_acqua = Limite_acqua;
+            this.Limite_caffe = Limite_caffe;
             return b;
         }
     }
