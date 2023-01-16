@@ -54,7 +54,12 @@ namespace macchina_caffè
 
         public Macchinetta()
         {
-
+            Numero = "abc1234";
+            Limite_acqua = 2000;
+            Limite_caffe = 500;
+            SerbatoioAcqua = 0;
+            SerbatoioCaffe = 0;
+            this.erogati = 0;
         }
 
         public string Numero
@@ -92,7 +97,7 @@ namespace macchina_caffè
             { 
                 if (value <= 0)
                 {
-                    throw new ArgumentException("il valore inserito deve essere maggiore di 0");
+                    throw new Exception("il valore inserito deve essere maggiore di 0");
                 }
                 else
                 {
@@ -108,7 +113,7 @@ namespace macchina_caffè
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException("il valore inserito deve essere maggiore di 0");
+                    throw new Exception("il valore inserito deve essere maggiore di 0");
                 }
                 else
                 {
